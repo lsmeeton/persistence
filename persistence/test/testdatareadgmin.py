@@ -66,14 +66,15 @@ class Test(unittest.TestCase):
         self.dr.ReadMinima()        
         self.dr.ReadTransitionStates()
         self.dr.OrderStationaryPoints()
-        self.testdr.ts = [(18.3911584054, 3, 2),
-                          (18.6159343448, 5, 1),
-                          (58.2830620095, 5, 3),
-                          (12.8449850419, 1, 1),
+        self.testdr.ts = [(12.8449850419, 1, 1),
                           (16.5393012580, 3, 1),
+                          (17.6419506053, 3, 4),
+                          (18.3911584054, 3, 2),
+                          (18.6159343448, 5, 1),
                           (52.7474808984, 3, 2),
                           (54.7059708697, 3, 4),
-                          (17.6419506053, 3, 4)]
+                          (58.2830620095, 5, 3)]
+
         try:
             self.assertEqual(self.dr.ts, self.testdr.ts, "Transition States not sorted correctly")
         except AssertionError as e:

@@ -28,7 +28,7 @@ class DataReadGMIN(DataRead):
         except IOError as e:
             print e
             
-        self.m = [float(i.split()[0]) for i in f.readlines()]
+        self.m = [float(i.split()[0]) for i in f.readlines() if float(i.split()[0])]
         
     def ReadTransitionStates(self):
         '''
@@ -39,7 +39,9 @@ class DataReadGMIN(DataRead):
         except IOError as e:
             print e
         
-        self.ts = [tuple([float(i.split()[0]), int(i.split()[3]), int(i.split()[4])]) for i in f.readlines()]
+        self.ts = [tuple([float(i.split()[0]), 
+                          int(i.split()[3]), 
+                          int(i.split()[4])]) for i in f.readlines()]
         
 if __name__ == '__main__':
     dr = DataReadGMIN('test/min.data','test/ts.data')

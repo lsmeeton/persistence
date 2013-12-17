@@ -13,31 +13,34 @@ class DataRead(object):
     
     ts: List for storing transition state energy and it's two connecting minima as a tuple
     classdocs
+    
+    threshold: above which no minima or transtion states are read from file
     '''
 
 
-    def __init__(self):
+    def __init__(self,threshold=None):
         '''
         Constructor
         '''
         self.m = []
         self.ts = []
-        
+        self.threshold = threshold
+
     def OrderStationaryPoints(self):
         '''
         Orders self.m by in ascending energy and re-evaluates all transition state indices
         '''
+        m = sorted(self.m)
         # Return list of sorted minima indices
-        index = sorted(range(len(self.m)), key=lambda k: self.m[k]) 
 
+        index = [m.index(i) for i in self.m]
         # Change corresponding minima indices in self.ts
         # The +1 -1 bit is for python FORTRAN array/list index conversion
         self.ts = [tuple([float(t[0]),
                           int(index[t[1]-1]+1), 
                           int(index[t[2]-1]+1)]) for t in self.ts]
-        
-        # Finally, sort self.m in-place
-        self.m.sort()
+
+        self.m = m
         
 if __name__ == '__main__':
     dr = DataRead()

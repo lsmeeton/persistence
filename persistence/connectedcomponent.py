@@ -3,16 +3,19 @@ Created on 17 Dec 2013
 
 @author: lewis
 '''
+import exceptions
+
 __metaclass__ = type
 class ConnectedComponent(object):
     '''
     Class for defining connected components for persistence diagrams
-    Initiates four class attributes:
+    Initiates five class attributes:
     
     birth: Energy at which connected component is born
     death: Energy at which connected component dies
     eatenby: Connected component which current connected component is eaten by
-    contents: List of minima indices contained in connected component
+    m: List of minima indices contained in connected component
+    size: Number of minima contained in connected component
     '''
 
 
@@ -23,15 +26,42 @@ class ConnectedComponent(object):
         self.birth = birth
         self.death = None
         self.eatenby = None
-        self.contents = [min_id]
+        self.m = [min_id]
         self.size = 1
         
-    def AddContents(self,m):
+    def AddMinima(self,m):
         '''
-        Takes as argument list of minima indices, m, and adds them to contents
+        Takes as argument list of minima indices, m, and adds them to self.m
         '''
-        self.contents.append(m)
+        self.m += m
+        self.size = len(self.m)
         
+    def Kill(self,cc, death):
+        '''
+        Kill connected component self with connected component cc at energy death
+        '''
+        if death > self.birth:
+            self.death = death
+            self.eatenby = cc
+        else: raise ConnectedComponentError('Component dies before it is born, Birth:%2.6f, Death:%2.6f'%(self.birth,death))
+
+    def Eat(self, cc, death):
+        '''
+        Kill connected component cc at energy death and add it's minima to m
+        '''
+        cc.Kill(self,death)
+        self.AddMinima(cc.m)
+        
+class ConnectedComponentError(Exception):
+    '''
+    ConnectedComponent Error class
+    '''
+    pass
+
+
 if __name__ == '__main__':
-    cc = ConnectedComponent(birth=0, min_id=1)
-    print cc.__dict__
+    cc1 = ConnectedComponent(birth=0, min_id=1)
+    cc2 = ConnectedComponent(birth=1, min_id=2)
+    print cc1.__dict__, cc2.__dict__
+    cc1.Eat(cc2,death=2)
+    print cc1.__dict__, cc2.__dict__
