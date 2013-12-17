@@ -39,9 +39,10 @@ class DataReadGMIN(DataRead):
         except IOError as e:
             print e
         
-        self.ts = [tuple([float(i.split()[0]), int(i.split()[2]), int(i.split()[3])]) for i in f.readlines()]
+        self.ts = [tuple([float(i.split()[0]), int(i.split()[3]), int(i.split()[4])]) for i in f.readlines()]
         
 if __name__ == '__main__':
     dr = DataReadGMIN('test/min.data','test/ts.data')
     dr.ReadMinima()
     dr.ReadTransitionStates()
+    dr.OrderStationaryPoints()
