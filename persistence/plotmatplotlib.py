@@ -11,8 +11,6 @@ class PlotMatPlotLib(Plot):
     Plots persistence diagrams using matplotlib
     
     '''
-
-
     def __init__(self, pd):
         '''
         Constructor
