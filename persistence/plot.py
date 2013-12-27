@@ -10,6 +10,8 @@ class Plot(object):
     Initiates one attribute:
     
     pd: Persistence Diagram
+    
+    Initiates five methods which act as place holders which may/should be replaced in any of the derived plottig objects
     '''
 
 
@@ -18,3 +20,21 @@ class Plot(object):
         Constructor
         '''
         self.pd = pd
+        
+    def MakeFigure(self):
+        pass
+    
+    def SetAxes(self):
+        pass
+    
+    def DrawDiagonal(self):
+        pass
+    
+    def PlotConnectedComponents(self):
+        pass
+    
+    def PlotConnectedComponentsColour(self):
+        pass
+    
+    def Show(self):
+        pass

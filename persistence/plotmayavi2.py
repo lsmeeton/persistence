@@ -20,21 +20,6 @@ class PlotMayaVI2(Plot):
         
     def MakeFigure(self):
         self.fig = mlab.figure()
-#         self.ax = self.fig.add_subplot(111)
-        
-    def SetAxes(self,ax_min, ax_max):
-        pass
-#         mlab.axes()
-#         self.ax.set_xlim(xmin=ax_min)
-#         self.ax.set_ylim(ymin=ax_min)
-        
-#         self.ax.set_xlim(xmax=ax_max)
-#         self.ax.set_ylim(ymax=ax_max)
-        
-    def DrawDiagonal(self):
-        pass
-#         ax_min, ax_max = plt.xlim()   # return the current xlim
-#         plt.plot([ax_min, ax_max], [ax_min, ax_max])
         
     def PlotConnectedComponents(self):
         x = [cc.birth for cc in self.pd.cc[1:]]

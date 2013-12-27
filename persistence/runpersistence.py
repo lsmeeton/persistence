@@ -1,6 +1,5 @@
 from persistence.datareadgmin import DataReadGMIN
 from persistence.persistencediagram import PersistenceDiagram 
-# from persistence.connectedcomponent import ConnectedComponent
 
 try:
     from persistence.plotmatplotlib import PlotMatPlotLib
@@ -88,23 +87,24 @@ print "Removing unconnected components"
 pd.RemoveUnconnectedComponents()
 
 if args.mayavi2:
+    UseMayaVI2()
     print "plotting persistence diagram"
     pl = PlotMayaVI2(pd)
-    pl.MakeFigure()
-    pl.SetAxes(dr.m[0], dr.ts[-1][0])
-    pl.DrawDiagonal()
-    pl.PlotConnectedComponents()
-    pl.Show()
-
-if args.matplotlib:#args.matplotlib:
+if args.matplotlib:
+    UseMatPlotLib()
     print "Plotting persistence diagram using matplotlib"
     pl = PlotMatPlotLib(pd)
-    pl.MakeFigure()
-    pl.SetAxes(dr.m[0], max([i[0] for i in dr.ts]))
-    pl.DrawDiagonal()
-    if not args.cs:
-        pl.PlotConnectedComponents()
-    else:
-        print "Colouring connected components according to size"
-        pl.PlotConnectedComponentsColour()
-    pl.Show()
+    
+pl.MakeFigure()
+pl.SetAxes(dr.m[0], max([i[0] for i in dr.ts]))
+pl.DrawDiagonal()
+
+if not args.cs:
+    pl.PlotConnectedComponents()
+else:
+    print "Colouring connected components according to size"
+    pl.PlotConnectedComponentsColour()
+
+pl.Show()
+
+
