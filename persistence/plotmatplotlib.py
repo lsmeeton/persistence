@@ -5,6 +5,9 @@ Created on 17 Dec 2013
 '''
 import matplotlib.pyplot as plt
 from persistence.plot import Plot
+import matplotlib.colors as colors
+import matplotlib.cm as cm
+import matplotlib.colorbar as cb
 __metaclass__ = type
 class PlotMatPlotLib(Plot):
     '''
@@ -16,6 +19,7 @@ class PlotMatPlotLib(Plot):
         Constructor
         '''
         super(PlotMatPlotLib,self).__init__(pd)
+        
         
     def MakeFigure(self):
         self.fig = plt.figure()
@@ -35,6 +39,39 @@ class PlotMatPlotLib(Plot):
     def PlotConnectedComponents(self):
         [plt.scatter(cc.birth, cc.death, alpha=0.4) for cc in self.pd.cc[1:]]
         
+    def PlotConnectedComponentsColour(self):
+        
+        self.BuildColourMap()
+        
+        col_map = cm.ScalarMappable(norm = self.norm, 
+                                    cmap = self.cmap)
+        [plt.scatter(cc.birth, 
+                     cc.death,
+                     color=col_map.to_rgba(cc.size, 
+                                           alpha=0.4))
+          for cc in self.pd.cc[1:]]
+        
+        self.AddColourBar()
+        
+    def BuildColourMap(self):
+        
+        self.cmap = cm.get_cmap('brg_r')
+        
+        self.col = [cc.size for cc in self.pd.cc[1:]]
+        
+        self.norm = colors.LogNorm(vmin = min(self.col),
+                                   vmax = max(self.col))        
+        
+    def AddColourBar(self):
+                
+        cax, kw = cb.make_axes(self.ax)
+        self.cb = cb.ColorbarBase(cax,
+                                  cmap=self.cmap,
+                                  norm=self.norm,
+                                  orientation='vertical')
+        
+        
+
     def Show(self):
         plt.show()
     

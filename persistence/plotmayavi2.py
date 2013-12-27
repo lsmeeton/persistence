@@ -24,6 +24,7 @@ class PlotMayaVI2(Plot):
         
     def SetAxes(self,ax_min, ax_max):
         pass
+#         mlab.axes()
 #         self.ax.set_xlim(xmin=ax_min)
 #         self.ax.set_ylim(ymin=ax_min)
         
@@ -36,9 +37,10 @@ class PlotMayaVI2(Plot):
 #         plt.plot([ax_min, ax_max], [ax_min, ax_max])
         
     def PlotConnectedComponents(self):
-        [mlab.plot3d([cc.birth,cc.birth], 
-                     [cc.death,cc.death], 
-                     [0, cc.size], tube_radius=0.025, colormap='Spectral') for cc in self.pd.cc[1:]]
+        x = [cc.birth for cc in self.pd.cc[1:]]
+        y = [cc.death for cc in self.pd.cc[1:]]
+        z = [cc.size for cc in self.pd.cc[1:]]
+        mlab.points3d(x, y, z)
         
     def Show(self):
         mlab.show()

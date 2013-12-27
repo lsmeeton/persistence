@@ -27,7 +27,7 @@ class DataReadGMIN(DataRead):
             f = open(self.min_file)
         except IOError as e:
             print e
-            
+            raise e
         self.m = [float(i.split()[0]) for i in f.readlines() if float(i.split()[0])]
         
     def ReadTransitionStates(self):
