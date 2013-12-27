@@ -54,6 +54,7 @@ plot_group.add_argument('--mayavi2',
 parser.add_argument('--threshold',
                     type=float,
                     default=None,
+                    metavar='e',
                     dest='threshold',
                     help="Energy threshold above which no minima or transition states are included in persistence diagram. Default energy units")
 parser.add_argument('--colourbysize',
