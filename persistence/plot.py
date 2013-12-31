@@ -30,7 +30,7 @@ class Plot(object):
     
     pd: Persistence Diagram
     
-    Initiates five methods which act as place holders which may/should be replaced in any of the derived plottig objects
+    Initiates five methods which act as place holders which may/should be replaced in any of the derived plotting objects
     '''
     
     def __init__(self, pd):

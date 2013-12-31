@@ -84,6 +84,32 @@ class DataReadGMIN(DataRead):
                           int(i.split()[3]), 
                           int(i.split()[4])]) for i in f.readlines()]
         
+class DataReadpele(DataRead):
+    '''
+    Class to read minimum and transition state data from a pele sql database
+    '''
+
+    def __init__(self,min_file,*args):
+        '''
+        Constructor
+        '''
+        super(DataReadGMIN,self).__init__()
+        self.min_file = min_file
+        self.ts_file = min_file
+
+    
+    def ReadMinima(self):
+        '''
+        Read minima from file self.min_file
+        '''
+        pass
+        
+    def ReadTransitionStates(self):
+        '''
+        Read transition states from file self.ts_file
+        '''
+        pass
+        
 if __name__ == '__main__':
     dr = DataReadGMIN('test/min.data','test/ts.data')
     dr.ReadMinima()

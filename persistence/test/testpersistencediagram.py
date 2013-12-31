@@ -42,7 +42,7 @@ class TestPersistenceDiagram(unittest.TestCase):
         '''
         Tests that a connected component is capable of eating another
         '''
-        pass
+        print self.pd
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

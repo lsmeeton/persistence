@@ -20,6 +20,11 @@ class PersistenceDiagram(object):
         '''
         self.cc = None
         
+    def __str__(self):
+        s = "Connected Components\nBirth\tContents\n"
+        r = ''.join([s.join(str(cc.birth) + '\t' + str(cc.m) + '\n') for cc in self.cc])
+        return r
+        
     def Populate(self,m):
         '''
         Takes as argument ascending ordered list of minima energies, m,
