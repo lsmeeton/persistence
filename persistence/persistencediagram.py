@@ -53,7 +53,7 @@ class PersistenceDiagram(object):
     
     def LocateConnectedComponent(self,m):
         '''
-        Given a minimum m, locate and return connected component c
+        Given a minimum m, locate and return connected component cc
         '''
         cc = self.cc[m-1]
         while cc.eatenby:

@@ -6,7 +6,7 @@ Created on 16 Dec 2013
 import unittest
 from persistence.datareadgmin import DataReadGMIN
 
-class Test(unittest.TestCase):
+class TestDataReadGMIN(unittest.TestCase):
 
 
     def setUp(self):

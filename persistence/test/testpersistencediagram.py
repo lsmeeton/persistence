@@ -38,7 +38,11 @@ class TestPersistenceDiagram(unittest.TestCase):
     def testComponentsNotEqual(self):
         [self.assertNotEqual(cc1, cc2, 'cc should not be equal') for cc1, cc2 in permutations(self.pd.cc,r=2)]
 
-    
+    def testEat(self):
+        '''
+        Tests that a connected component is capable of eating another
+        '''
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

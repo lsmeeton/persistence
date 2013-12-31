@@ -39,6 +39,9 @@ class DataRead(object):
         self.ts = [tuple([float(t[0]),
                           int(index[t[1]-1]+1), 
                           int(index[t[2]-1]+1)]) for t in self.ts]
+        
+        # Sort transition states by energy
+        self.ts = sorted(self.ts, key=lambda x: x[0], reverse=False)
 
         self.m = m
         
