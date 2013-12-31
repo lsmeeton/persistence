@@ -1,17 +1,6 @@
 from persistence.dataread import DataReadGMIN
 from persistence.persistencediagram import PersistenceDiagram 
-
-try:
-    from persistence.plotmatplotlib import PlotMatPlotLib
-    def UseMatPlotLib(): pass
-except ImportError as e:
-    def UseMatPlotLib(): raise e
-
-try:
-    from persistence.plotmayavi2 import PlotMayaVI2
-    def UseMayaVI2(): pass
-except ImportError as e:
-    def UseMayaVI2(): raise e
+from persistence.plot import PlotMatPlotLib, PlotMayaVI2
     
 import argparse
 
@@ -88,11 +77,11 @@ print "Removing unconnected components"
 pd.RemoveUnconnectedComponents()
 
 if args.mayavi2:
-    UseMayaVI2()
+
     print "plotting persistence diagram"
     pl = PlotMayaVI2(pd)
 if args.matplotlib:
-    UseMatPlotLib()
+
     print "Plotting persistence diagram using matplotlib"
     pl = PlotMatPlotLib(pd)
     
