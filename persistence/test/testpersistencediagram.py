@@ -4,7 +4,7 @@ Created on 17 Dec 2013
 @author: lewis
 '''
 import unittest
-from persistence.datareadgmin import DataReadGMIN
+from persistence.dataread import DataReadGMIN
 from persistence.persistencediagram import PersistenceDiagram
 from itertools import permutations
 

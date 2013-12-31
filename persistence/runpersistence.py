@@ -1,4 +1,4 @@
-from persistence.datareadgmin import DataReadGMIN
+from persistence.dataread import DataReadGMIN
 from persistence.persistencediagram import PersistenceDiagram 
 
 try:

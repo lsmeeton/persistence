@@ -4,7 +4,7 @@ Created on 16 Dec 2013
 @author: lewis
 '''
 import unittest
-from persistence.datareadgmin import DataReadGMIN
+from persistence.dataread import DataReadGMIN
 
 class TestDataReadGMIN(unittest.TestCase):
 
