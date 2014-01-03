@@ -39,28 +39,28 @@ class Plot(object):
     Initiates five methods which act as place holders which may/should be replaced in any of the derived plotting objects
     '''
     
-    def __init__(self, pd):
+    def __init__(self, pd,*args):
         '''
         Constructor
         '''
         self.pd = pd
         
-    def MakeFigure(self):
+    def MakeFigure(self,*args):
         pass
     
-    def SetAxes(self):
+    def SetAxes(self,*args):
         pass
     
-    def DrawDiagonal(self):
+    def DrawDiagonal(self,*args):
         pass
     
-    def PlotConnectedComponents(self):
+    def PlotConnectedComponents(self,*args):
         pass
     
-    def PlotConnectedComponentsColour(self):
+    def PlotConnectedComponentsColour(self,*args):
         pass
     
-    def Show(self):
+    def Show(self,*args):
         pass
     
 class PlotMatPlotLib(Plot):
@@ -163,9 +163,6 @@ class PlotPlotly(Plot):
         '''
         super(PlotPlotly,self).__init__(pd)
         UsePlotly()
-        
-#         self.user = username_or_email
-#         self.apikey = key
         
         ply.plotly(username_or_email=username_or_email, key=key)
 

@@ -11,14 +11,14 @@ import argparse
 # http://docs.python.org/2.7/library/argparse.html                                                                                    
 parser = argparse.ArgumentParser(description="Read arguments for the calculation, plotting and storage of persistence diagrams")
 
-read_group = parser.add_mutually_exclusive_group()
-plot_group = parser.add_mutually_exclusive_group()
+read_group = parser.add_mutually_exclusive_group(required=True)
+plot_group = parser.add_mutually_exclusive_group(required=True)
 
 read_group.add_argument('-g',
                         nargs=2,
                         type=str,
                         metavar=('min.data','ts.data'),
-                        default=['min.data','ts.data'],
+                        default=None,
                         dest='gmin',
                         help='Location of files containing minima and transition states in GMIN file format')
 read_group.add_argument('-p',
@@ -43,7 +43,7 @@ plot_group.add_argument('--plotly',
                         nargs=2,
                         type=str,
                         metavar=('username_or_email','api_key'),
-                        default=['lcs137@bham.ac.uk','2u5exydu1q'],
+                        default=None,#['lcs137@bham.ac.uk','2u5exydu1q'],
 #                         default=None,
                         dest='plotly',
                         help="plot persistence diagram using plotly")
@@ -90,7 +90,7 @@ if args.mayavi2:
     pl = PlotMayaVI2(pd)
     
 if args.plotly:
-    print "Plotting persistence diagram using Plot.ly python api"
+    print "Plotting persistence diagram using Plot.ly python api with username or email: %s and api key: %s"%(tuple(args.plotly))
     pl = PlotPlotly(pd, 
                     username_or_email=args.plotly[0], 
                     key=args.plotly[1])
