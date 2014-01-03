@@ -1,6 +1,6 @@
 from persistence.dataread import DataReadGMIN
 from persistence.persistencediagram import PersistenceDiagram 
-from persistence.plot import PlotMatPlotLib, PlotMayaVI2
+from persistence.plot import PlotMatPlotLib, PlotMayaVI2, PlotPlotly
     
 import argparse
 
@@ -31,14 +31,22 @@ read_group.add_argument('-p',
 
 plot_group.add_argument('--matplotlib',
                         action='store_true',
-                        default=True,
+                        default=None,
                         dest='matplotlib',
                         help="plot persistence diagram using matplotlib")
 plot_group.add_argument('--mayavi2',
                         action='store_true',
-                        default=False,
+                        default=None,
                         dest='mayavi2',
                         help="plot persistence diagram using mayavi2")
+plot_group.add_argument('--plotly',
+                        nargs=2,
+                        type=str,
+                        metavar=('username_or_email','api_key'),
+                        default=['lcs137@bham.ac.uk','2u5exydu1q'],
+#                         default=None,
+                        dest='plotly',
+                        help="plot persistence diagram using plotly")
 
 parser.add_argument('--threshold',
                     type=float,
@@ -78,8 +86,15 @@ pd.RemoveUnconnectedComponents()
 
 if args.mayavi2:
 
-    print "plotting persistence diagram"
+    print "Plotting persistence diagram"
     pl = PlotMayaVI2(pd)
+    
+if args.plotly:
+    print "Plotting persistence diagram using Plot.ly python api"
+    pl = PlotPlotly(pd, 
+                    username_or_email=args.plotly[0], 
+                    key=args.plotly[1])
+    
 if args.matplotlib:
 
     print "Plotting persistence diagram using matplotlib"

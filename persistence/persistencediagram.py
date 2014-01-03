@@ -21,8 +21,8 @@ class PersistenceDiagram(object):
         self.cc = None
         
     def __str__(self):
-        s = "Connected Components\nBirth\tContents\n"
-        r = ''.join([s.join(str(cc.birth) + '\t' + str(cc.m) + '\n') for cc in self.cc])
+        s = "Connected Components\nBirth\tSize\n"
+        r = ''.join([s.join(str(cc.birth) + '\t' + str(cc.size) + '\n') for cc in self.cc])
         return r
         
     def Populate(self,m):
@@ -76,7 +76,7 @@ class PersistenceDiagram(object):
         self.cc = gcc + self.cc
         
 if __name__ == '__main__':
-    from persistence.datareadgmin import DataReadGMIN
+    from persistence.dataread import DataReadGMIN
     dr = DataReadGMIN('test/min.data','test/ts.data')
     dr.ReadMinima()
     dr.ReadTransitionStates()

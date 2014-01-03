@@ -36,21 +36,21 @@ class ConnectedComponent(object):
         self.m += m
         self.size = len(self.m)
         
-    def Kill(self,cc, death):
+    def Kill(self, other, death):
         '''
-        Kill connected component self with connected component cc at energy death
+        Kill connected component self with connected component other at energy death
         '''
         if death > self.birth:
             self.death = death
-            self.eatenby = cc
+            self.eatenby = other
         else: raise ConnectedComponentError('Component dies before it is born, Birth:%2.6f, Death:%2.6f'%(self.birth,death))
 
-    def Eat(self, cc, death):
+    def Eat(self, other, death):
         '''
-        Kill connected component cc at energy death and add it's minima to m
+        Kill connected component other at energy death and add it's minima to m
         '''
-        cc.Kill(self,death)
-        self.AddMinima(cc.m)
+        other.Kill(self,death)
+        self.AddMinima(other.m)
         
 class ConnectedComponentError(Exception):
     '''

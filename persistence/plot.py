@@ -21,6 +21,12 @@ try:
     
 except ImportError as e:
     def UseMayaVI2(): raise e
+    
+try:
+    import plotly as ply
+    def UsePlotly(): pass
+except ImportError as e:
+    def UsePlotly(): raise e
 
 __metaclass__ = type
 class Plot(object):
@@ -146,6 +152,23 @@ class PlotMayaVI2(Plot):
     def Show(self):
         mlab.show()
         
+        
+class PlotPlotly(Plot):
+    '''
+    classdocs
+    '''
+    def __init__(self, pd, username_or_email, key):
+        '''
+        Constructor
+        '''
+        super(PlotPlotly,self).__init__(pd)
+        UsePlotly()
+        
+#         self.user = username_or_email
+#         self.apikey = key
+        
+        ply.plotly(username_or_email=username_or_email, key=key)
+
 if __name__ == '__main__':
     from persistence.dataread import DataReadGMIN
     from persistence.persistencediagram import PersistenceDiagram
