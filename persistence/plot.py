@@ -164,8 +164,23 @@ class PlotPlotly(Plot):
         super(PlotPlotly,self).__init__(pd)
         UsePlotly()
         
-        ply.plotly(username_or_email=username_or_email, key=key)
+        self.fig = ply.plotly(username_or_email=username_or_email, key=key)
+        
+    def PlotConnectedComponents(self, *args):
 
+        scatter = [[cc.birth, cc.death ] for cc in self.pd.cc[1:]]
+        
+        self._scatter = {'x':[x[0] for x in scatter],
+                         'y':[y[1] for y in scatter],
+                         'type':'scatter','mode':'markers',
+                         'marker':{'color':'rgb(0, 0, 255)','opacity':0.5 }}
+
+    def DrawDiagonal(self):
+        pass
+        
+    def Show(self):
+        self.fig.plot(self._scatter)
+        
 if __name__ == '__main__':
     from persistence.dataread import DataReadGMIN
     from persistence.persistencediagram import PersistenceDiagram
