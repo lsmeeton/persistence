@@ -101,7 +101,7 @@ if args.matplotlib:
     pl = PlotMatPlotLib(pd)
     
 pl.MakeFigure()
-pl.SetAxes(dr.m[0], max([i[0] for i in dr.ts]))
+pl.SetAxes(dr.m[0], dr.ts[-1][0])
 pl.DrawDiagonal()
 
 if not args.cs:

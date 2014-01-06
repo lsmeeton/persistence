@@ -170,16 +170,47 @@ class PlotPlotly(Plot):
 
         scatter = [[cc.birth, cc.death ] for cc in self.pd.cc[1:]]
         
-        self._scatter = {'x':[x[0] for x in scatter],
+        self.scatter = {'x':[x[0] for x in scatter],
                          'y':[y[1] for y in scatter],
                          'type':'scatter','mode':'markers',
                          'marker':{'color':'rgb(0, 0, 255)','opacity':0.5 }}
+        
+    def SetAxes(self,ax_min, ax_max):
+        self.xaxesstyle = {"title" : "Birth Energy",
+                           "type" : "linear",
+                           "rangemode" : "normal",
+                           "range" : [ax_min,ax_max]}
+
+        self.yaxesstyle = {"title" : "Death Energy",
+                           "type" : "linear",
+                           "rangemode" : "normal",
+                           "range" : [ax_min,ax_max]}
 
     def DrawDiagonal(self):
-        pass
+        x = self.xaxesstyle['range'][:]
+        y = self.yaxesstyle['range'][:]
+        self.diagonal = {'x': x,
+                         'y': y,
+                         'type': 'scatter',
+                         'mode': 'lines'}
         
     def Show(self):
-        self.fig.plot(self._scatter)
+        
+        self.legendstyle = {"x" : 100, "y" : 1}
+        
+        self.layout = {"xaxis" : self.xaxesstyle,
+                       "yaxis" : self.yaxesstyle,
+                       'autosize': False,
+                       'width': 650,
+                       'height': 650,
+                       'title':'Persistence Diagram',
+                       'hovermode' : 'closest',
+                       'legend' : self.legendstyle,
+                       'showlegend' : False}
+        
+        self.fig.plot([self.scatter,self.diagonal],
+                      layout=self.layout,
+                      world_readable=False)
         
 if __name__ == '__main__':
     from persistence.dataread import DataReadGMIN
