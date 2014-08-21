@@ -8,11 +8,13 @@ from persistence.dataread import DataReadGMIN
 from persistence.persistencediagram import PersistenceDiagram
 from itertools import permutations, izip
 from persistence.connectedcomponent import ConnectedComponent
+import os
 
 class TestPersistenceDiagram(unittest.TestCase):
 
 
     def setUp(self):
+        testdir = os.path.dirname(os.path.abspath(__file__)) + os.sep
         self.dr = DataReadGMIN('min.data','ts.data')
         self.dr.m = [12.7849943904,
                      14.0832411640,

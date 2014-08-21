@@ -5,13 +5,15 @@ Created on 16 Dec 2013
 '''
 import unittest
 from persistence.dataread import DataReadGMIN
+import os
 
 class TestDataReadGMIN(unittest.TestCase):
 
 
     def setUp(self):
-        self.dr = DataReadGMIN('min.data','ts.data')
-        self.testdr = DataReadGMIN('min.data','ts.data')
+        testdir = os.path.dirname(os.path.abspath(__file__)) + os.sep
+        self.dr = DataReadGMIN(testdir + 'min.data',testdir + 'ts.data')
+        self.testdr = DataReadGMIN(testdir + 'min.data',testdir + 'ts.data')
         self.testdr.m = [14.4488253121,
                          14.0832411640,
                          12.7849943904,
