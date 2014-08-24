@@ -104,11 +104,9 @@ pl.MakeFigure()
 pl.SetAxes(dr.m[0], dr.ts[-1][0])
 pl.DrawDiagonal()
 
-if not args.cs:
-    pl.PlotConnectedComponents()
-else:
-    print "Colouring connected components according to size"
-    pl.PlotConnectedComponentsColour()
+if args.cs: print "Colouring connected components according to size"
+
+pl.PlotConnectedComponents(args.cs)
 
 pl.Show()
 

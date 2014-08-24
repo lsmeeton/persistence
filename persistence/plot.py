@@ -8,6 +8,8 @@ try:
     import matplotlib.colors as colors
     import matplotlib.cm as cm
     import matplotlib.colorbar as cb
+    from matplotlib.patches import Circle
+    from matplotlib.collections import PatchCollection
     
     def UseMatPlotLib(): pass
     
@@ -90,39 +92,45 @@ class PlotMatPlotLib(Plot):
         ax_min, ax_max = plt.xlim()   # return the current xlim
         plt.plot([ax_min, ax_max], [ax_min, ax_max])
         
-    def PlotConnectedComponents(self):
-        [plt.scatter(cc.birth, cc.death, alpha=0.4) for cc in self.pd.cc[1:]]
+    def PlotConnectedComponents(self,cs=None):
+
+        if cs:
+            cmap, col, norm = self.BuildColourMap()
         
-    def PlotConnectedComponentsColour(self):
-        
-        self.BuildColourMap()
-        
-        col_map = cm.ScalarMappable(norm = self.norm, 
-                                    cmap = self.cmap)
-        [plt.scatter(cc.birth, 
-                     cc.death,
-                     color=col_map.to_rgba(cc.size, 
-                                           alpha=0.4))
-          for cc in self.pd.cc[1:]]
-        
-        self.AddColourBar()
+            col_map = cm.ScalarMappable(norm = norm, 
+                                        cmap = cmap)
+            colour = col_map.to_rgba(col,alpha=0.4)
+
+            self.AddColourBar(cmap,norm)
+        else:
+            colour = 'b'
+
+        radius = 0.1
+        patches = [Circle((cc.birth,cc.death), radius) for cc in self.pd.cc[1:]]
+        p = PatchCollection(patches, 
+                            color = colour,
+                            edgecolor = 'black',
+                            linewidth = '0.05')
+        self.ax.add_collection(p)
         
     def BuildColourMap(self):
         
-        self.cmap = cm.get_cmap('brg_r')
+        cmap = cm.get_cmap('copper_r')
         
-        self.col = [cc.size for cc in self.pd.cc[1:]]
+        col = [cc.size for cc in self.pd.cc[1:]]
         
-        self.norm = colors.LogNorm(vmin = min(self.col),
-                                   vmax = max(self.col))        
+        norm = colors.LogNorm(vmin = min(col),
+                              vmax = max(col))
+
+        return cmap, col, norm
         
-    def AddColourBar(self):
+    def AddColourBar(self,cmap,norm):
                 
         cax, kw = cb.make_axes(self.ax)
-        self.cb = cb.ColorbarBase(cax,
-                                  cmap=self.cmap,
-                                  norm=self.norm,
-                                  orientation='vertical')
+        cb.ColorbarBase(cax,
+                        cmap=cmap,
+                        norm=norm,
+                        orientation='vertical')
 
     def Show(self):
         plt.show()
