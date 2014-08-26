@@ -81,18 +81,18 @@ class PlotMatPlotLib(Plot):
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111)
         
-    def SetAxes(self,ax_min, ax_max):
-        self.ax.set_xlim(xmin=ax_min)
-        self.ax.set_ylim(ymin=ax_min)
+    def SetAxes(self,x_ax_min, x_ax_max, y_ax_min, y_ax_max):
+        self.ax.set_xlim(xmin=x_ax_min)
+        self.ax.set_ylim(ymin=y_ax_min)
         
-        self.ax.set_xlim(xmax=ax_max)
-        self.ax.set_ylim(ymax=ax_max)
+        self.ax.set_xlim(xmax=x_ax_max)
+        self.ax.set_ylim(ymax=y_ax_max)
         
     def DrawDiagonal(self):
         ax_min, ax_max = plt.xlim()   # return the current xlim
         plt.plot([ax_min, ax_max], [ax_min, ax_max])
         
-    def PlotConnectedComponents(self,cs=None):
+    def PlotConnectedComponents(self,cs=None,flatten=None):
 
         if cs:
             cmap, col, norm = self.BuildColourMap()
@@ -106,7 +106,11 @@ class PlotMatPlotLib(Plot):
             colour = 'b'
 
         radius = 0.1
-        patches = [Circle((cc.birth,cc.death), radius) for cc in self.pd.cc[1:]]
+        if flatten:
+            patches = [Circle((cc.birth,cc.death - cc.birth), radius) for cc in self.pd.cc[1:]]
+        else:
+            patches = [Circle((cc.birth,cc.death), radius) for cc in self.pd.cc[1:]]
+
         p = PatchCollection(patches, 
                             color = colour,
                             edgecolor = 'black',
@@ -115,7 +119,7 @@ class PlotMatPlotLib(Plot):
         
     def BuildColourMap(self):
         
-        cmap = cm.get_cmap('copper_r')
+        cmap = cm.get_cmap('winter_r')
         
         col = [cc.size for cc in self.pd.cc[1:]]
         

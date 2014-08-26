@@ -59,7 +59,11 @@ parser.add_argument('--colourbysize',
                     default=None,
                     dest='cs',
                     help="Colour connected components according to number of minima they contain. Scaled logarithmically.")
-
+parser.add_argument('--flatten',
+                    action='store_true',
+                    default=None,
+                    dest='flatten',
+                    help="Plot birth against life for connected components, as opposed to birth against death")
 args = parser.parse_args()
 
 print args
@@ -101,13 +105,15 @@ if args.matplotlib:
     pl = PlotMatPlotLib(pd)
     
 pl.MakeFigure()
-pl.SetAxes(dr.m[0], dr.ts[-1][0])
-pl.DrawDiagonal()
 
-if args.cs: print "Colouring connected components according to size"
+if args.cs: 
+    print "Colouring connected components according to size"
+if args.flatten:
+    pl.SetAxes(dr.m[0], dr.ts[-1][0], 0, dr.ts[-1][0] - dr.m[0])
+else:
+    pl.SetAxes(dr.m[0], dr.ts[-1][0],dr.m[0], dr.ts[-1][0])
+    pl.DrawDiagonal()
 
-pl.PlotConnectedComponents(args.cs)
+pl.PlotConnectedComponents(args.cs,args.flatten)
 
 pl.Show()
-
-
