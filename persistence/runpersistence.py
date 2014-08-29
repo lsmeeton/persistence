@@ -1,4 +1,4 @@
-from persistence.dataread import DataReadGMIN
+from persistence.dataread import DataReadGMIN, DataReadpele
 from persistence.persistencediagram import PersistenceDiagram 
 from persistence.plot import PlotMatPlotLib, PlotMayaVI2, PlotPlotly
     
@@ -43,14 +43,13 @@ plot_group.add_argument('--plotly',
                         nargs=2,
                         type=str,
                         metavar=('username_or_email','api_key'),
-                        default=None,#['lcs137@bham.ac.uk','2u5exydu1q'],
-#                         default=None,
+                        default=None,
                         dest='plotly',
                         help="plot persistence diagram using plotly")
 
 parser.add_argument('--threshold',
                     type=float,
-                    default=None,
+                    default=float('inf'),
                     metavar='e',
                     dest='threshold',
                     help="Energy threshold above which no minima or transition states are included in persistence diagram. Default energy units")
@@ -66,11 +65,11 @@ parser.add_argument('--flatten',
                     help="Plot birth against life for connected components, as opposed to birth against death")
 args = parser.parse_args()
 
-print args
 #------------------------------------------------------------------------------#
 if args.gmin:
-    dr = DataReadGMIN(min_file=args.gmin[0], ts_file=args.gmin[1])
-else: pass # Add pele data file reading here
+    dr = DataReadGMIN(min_file=args.gmin[0], ts_file=args.gmin[1],threshold=args.threshold)
+else: 
+    dr = DataReadpele(db_file=args.pele[0],threshold=args.threshold)
 
 print "Reading Minima"
 dr.ReadMinima()
