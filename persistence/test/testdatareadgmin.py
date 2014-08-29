@@ -43,6 +43,7 @@ class TestDataReadGMIN(unittest.TestCase):
         self.assertEqual(self.testdr.m, self.dr.m , "Minima have not been read from file correctly")
 
     def testReadTransitionStates(self):
+        self.dr.ReadMinima()
         self.dr.ReadTransitionStates()
         self.assertEqual(self.testdr.ts, self.dr.ts , "Transition States have not been read from file correctly")
         
