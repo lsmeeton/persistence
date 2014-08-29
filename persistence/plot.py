@@ -52,6 +52,9 @@ class Plot(object):
     
     def SetAxes(self,*args):
         pass
+
+    def LabelAxes(self,*args):
+        pass
     
     def DrawDiagonal(self,*args):
         pass
@@ -87,6 +90,10 @@ class PlotMatPlotLib(Plot):
         
         self.ax.set_xlim(xmax=x_ax_max)
         self.ax.set_ylim(ymax=y_ax_max)
+
+    def LabelAxes(self, x_label="Birth", y_label="Death"):
+        self.ax.set_xlabel(x_label)
+        self.ax.set_ylabel(y_label)
         
     def DrawDiagonal(self):
         ax_min, ax_max = plt.xlim()   # return the current xlim

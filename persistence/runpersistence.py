@@ -109,9 +109,11 @@ if args.cs:
     print "Colouring connected components according to size"
 if args.flatten:
     pl.SetAxes(dr.m[0], dr.ts[-1][0], 0, dr.ts[-1][0] - dr.m[0])
+    pl.LabelAxes(x_label="Birth",y_label="Life")
 else:
     pl.SetAxes(dr.m[0], dr.ts[-1][0],dr.m[0], dr.ts[-1][0])
     pl.DrawDiagonal()
+    pl.LabelAxes(x_label="Birth",y_label="Death")
 
 pl.PlotConnectedComponents(args.cs,args.flatten)
 
