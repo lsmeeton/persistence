@@ -1,6 +1,6 @@
 from persistence.dataread import DataReadGMIN, DataReadpele
 from persistence.persistencediagram import PersistenceDiagram 
-from persistence.plot import PlotMatPlotLib, PlotMayaVI2, PlotPlotly
+from persistence.plot import PlotMatPlotLib, PlotMayaVI2, PlotPlotly, PlotToText
     
 import argparse
 
@@ -46,6 +46,14 @@ plot_group.add_argument('--plotly',
                         default=None,
                         dest='plotly',
                         help="plot persistence diagram using plotly")
+
+plot_group.add_argument('--text',
+                        nargs=1,
+                        type=str,
+                        metavar='fname',
+                        default=None,
+                        dest='text',
+                        help="write co-ordinates of persistence diagram to text file")
 
 parser.add_argument('--threshold',
                     type=float,
@@ -102,7 +110,11 @@ if args.matplotlib:
 
     print "Plotting persistence diagram using matplotlib"
     pl = PlotMatPlotLib(pd)
-    
+
+if args.text:
+    print "Writing persistence diagram co-ordiantes to file %s"%args.text[0]
+    pl = PlotToText(pd,
+                    fname = args.text)
 pl.MakeFigure()
 
 if args.cs: 
@@ -115,6 +127,7 @@ else:
     pl.DrawDiagonal()
     pl.LabelAxes(x_label="Birth",y_label="Death")
 
-pl.PlotConnectedComponents(args.cs,args.flatten)
+pl.PlotConnectedComponents(cs=args.cs,
+                           flatten=args.flatten)
 
 pl.Show()

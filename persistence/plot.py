@@ -41,31 +41,31 @@ class Plot(object):
     Initiates five methods which act as place holders which may/should be replaced in any of the derived plotting objects
     '''
     
-    def __init__(self, pd,*args):
+    def __init__(self, pd,*args,**kwargs):
         '''
         Constructor
         '''
         self.pd = pd
         
-    def MakeFigure(self,*args):
+    def MakeFigure(self,*args,**kwargs):
         pass
     
-    def SetAxes(self,*args):
+    def SetAxes(self,*args,**kwargs):
         pass
 
-    def LabelAxes(self,*args):
+    def LabelAxes(self,*args,**kwargs):
         pass
     
-    def DrawDiagonal(self,*args):
+    def DrawDiagonal(self,*args,**kwargs):
         pass
     
-    def PlotConnectedComponents(self,*args):
+    def PlotConnectedComponents(self,*args,**kwargs):
         pass
     
-    def PlotConnectedComponentsColour(self,*args):
+    def PlotConnectedComponentsColour(self,*args,**kwargs):
         pass
     
-    def Show(self,*args):
+    def Show(self,*args,**kwargs):
         pass
     
 class PlotMatPlotLib(Plot):
@@ -230,6 +230,35 @@ class PlotPlotly(Plot):
         self.fig.plot([self.scatter,self.diagonal],
                       layout=self.layout,
                       world_readable=False)
+
+class PlotToText(Plot):
+    '''
+    classdocs
+    '''
+    def __init__(self, pd, fname):
+        '''
+        Constructor
+        '''
+        super(PlotToText,self).__init__(pd)
+        self.fname = fname[0]
+
+    def PlotConnectedComponents(self, flatten=None,*args,**kwargs):
+
+        self.x = [cc.birth for cc in self.pd.cc[1:]]
+        
+        if flatten:
+            self.y = [cc.death - cc.birth for cc in self.pd.cc[1:]]
+        else:
+            self.y = [cc.death for cc in self.pd.cc[1:]]
+        self.z = [cc.size for cc in self.pd.cc[1:]]
+    
+    def Show(self,*args,**kwargs):
+        with open(self.fname,'w') as f:
+            f.write("#Birth\tDeath\tSize\n")
+            for i, x in enumerate(self.x):
+                s = "%2.6f\t%2.6f\t%d\n"%(x,self.y[i],self.z[i])
+                f.write(s)
+        
         
 if __name__ == '__main__':
     from persistence.dataread import DataReadGMIN
