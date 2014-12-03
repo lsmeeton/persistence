@@ -3,6 +3,8 @@ Created on 16 Dec 2013
 
 @author: lewis
 '''
+import itertools as it
+
 from pele.storage import Database, Minimum, TransitionState
 __metaclass__ = type
 class DataRead(object):
@@ -51,7 +53,17 @@ class DataRead(object):
         Remove transition states where 1. One or both of the connecting minima have
         energies higher than that of the transition state; 2. the transition state is degenerate
         '''
+        del_lst = []
+        for e, m1, m2 in self.ts:
+            e1 = self.m[m1-1]
+            e2 = self.m[m2-1]
 
+            if e1 > e or e2 > e:
+                del_lst.append(False)
+            else:
+                del_lst.append(True)
+
+        self.ts = [ts for ts,element in it.izip(self.ts,del_lst) if element]
 
 
 class DataReadGMIN(DataRead):
@@ -180,6 +192,8 @@ class DataReadpele(DataRead):
                                   m2]))
 
         self._Relabel()
+
+        self.RemoveInvalidTS()
 
     def _AssignMinima(self):
         '''
