@@ -43,21 +43,36 @@ class ConnectedComponent(object):
         if death > self.birth:
             self.death = death
             self.eatenby = other
-        else: raise ConnectedComponentError('Component dies before it is born, Birth:%2.6f, Death:%2.6f'%(self.birth,death))
+        else: 
+            raise ConnectedComponentError(birth = self.birth, death = death)
 
     def Eat(self, other, death):
         '''
         Kill connected component other at energy death and add it's minima to m
         '''
-        other.Kill(self,death)
+        try:
+            other.Kill(self,death)
+        except ConnectedComponentError as cc_e:
+            print "Connected Component w. Death: %2.6f before Birth: %2.6f found"%(cc_e.birth,cc_e.death)
         self.AddMinima(other.m)
         
 class ConnectedComponentError(Exception):
     '''
     ConnectedComponent Error class
     '''
-    pass
+    def __init__(self, *args, **kwargs):
+        '''
+        Constructor
+        '''
+        super(ConnectedComponentError,self).__init__(*args, **kwargs)
+        self.birth = 0.0
+        self.death = 0.0
 
+        if kwargs.has_key('birth'):
+            self.birth = kwargs['birth']
+
+        if kwargs.has_key('death'):
+            self.death = kwargs['death']
 
 if __name__ == '__main__':
     cc1 = ConnectedComponent(birth=0, min_id=1)
